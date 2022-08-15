@@ -45,6 +45,14 @@ describe('backend-express-template routes', () => {
     });
   });
 
+  it('signs in an existing user', async () => {
+    await request(app).post('/api/v1/users').send(userExample);
+    const res = await request(app)
+      .post('/api/v1/users/sessions')
+      .send({ email: 'doubleQuarterpounder@mcd.com', password: 'McDonalds' });
+    expect(res.status).toEqual(200);
+  });
+
   it('return current user', async () => {
     const [agent, user] = await registerAndLogin();
     const me = await agent.get('/api/v1/users/sessions');
