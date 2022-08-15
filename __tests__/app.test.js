@@ -44,20 +44,10 @@ describe('backend-express-template routes', () => {
   it('signs in an existing user', async () => {
     await request(app).post('/api/v1/users').send(userExample);
     const res = await request(app)
+      // test of email / password don't match
       .post('/api/v1/users/sessions')
       .send({ email: 'doubleQuarterpounder@mcd.com', password: 'McDonalds' });
     expect(res.status).toEqual(200);
-  });
-
-  it('return current user', async () => {
-    const [agent, user] = await registerAndLogin();
-    const me = await agent.get('/api/v1/users/sessions');
-    console.log(me.body);
-    expect(me.body).toEqual({
-      ...user,
-      exp: expect.any(Number),
-      iat: expect.any(Number),
-    });
   });
 
   it('should return a 403 when signed in but not admin and listing all users', async () => {
@@ -73,7 +63,6 @@ describe('backend-express-template routes', () => {
   it('should return a list of users if signed in as admin', async () => {
     const [agent, user] = await registerAndLogin({ email: 'admin' });
     const res = await agent.get('/api/v1/users');
-
     expect(res.body).toEqual([{ ...user }]);
   });
 
