@@ -28,10 +28,6 @@ describe('backend-express-template routes', () => {
     return setup(pool);
   });
 
-  it('example test - delete me!', () => {
-    expect(1).toEqual(1);
-  });
-
   it('create new user', async () => {
     const res = await request(app).post('/api/v1/users').send(userExample);
     const { firstName, lastName, email } = userExample;
