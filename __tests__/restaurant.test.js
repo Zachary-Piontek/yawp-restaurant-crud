@@ -15,7 +15,7 @@ describe('backend-express-template routes', () => {
   });
 
   it('/restaurants:id returns a restaurant with a review', async () => {
-    const resp = await request(app).get('/restaurants/1');
+    const resp = await request(app).get('/api/v1/restaurants/1');
     const restaurantOne = {
       review: {
         id: 1,
