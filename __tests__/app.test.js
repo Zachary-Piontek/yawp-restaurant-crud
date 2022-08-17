@@ -70,7 +70,7 @@ describe('backend-express-template routes', () => {
     const { email, password } = userExample;
     await agent.post('/api/v1/users/sessions').send({ email, password });
     const resp = await agent
-      .post('/api/v1/restaurants/1/reviews')
+      .post('/api/v1/restaurants/2/reviews')
       .send({ rating: '5 stars', opinion: 'Great every, single, time' });
     expect(resp.body).toEqual({
       id: '5',
@@ -80,16 +80,19 @@ describe('backend-express-template routes', () => {
     console.log(resp.body);
   });
 
-  // it('/reviews/:id deletes a review', async () => {
-  //   const agent = request.agent(app);
-  //   const resp = await agent
-  //     .delete('/api/v1/reviews/1');
-  //   console.log(resp.body);
-  //   expect(resp.status).toBe(200);
-  //   const deletedReview = await request(app).get('/api/v1/reviews/1');
-  //   expect(deletedReview.status).toBe(404);
-  //   console.log(deletedReview.status);
-  // });
+  it('/reviews/:id deletes a review', async () => {
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send(userExample);
+    const { email, password } = userExample;
+    await agent.post('/api/v1/users/sessions').send({ email, password });
+    const resp = await agent
+      .delete('/api/v1/reviews/1');
+    console.log(resp.body);
+    expect(resp.status).toBe(200);
+    const deletedReview = await request(app).get('/api/v1/reviews/1');
+    expect(deletedReview.status).toBe(404);
+    console.log(deletedReview.status);
+  });
 
 
   afterAll(() => {
