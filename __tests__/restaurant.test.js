@@ -44,6 +44,14 @@ describe('backend-express-template routes', () => {
     console.log(resp.body);
   });
 
+  it('/reviews/:id deletes a review', async () => {
+    const resp = await request(app).delete('/reviews/1');
+    expect(resp.status).toBe(200);
+    const deletedReview = await request(app).get('/reviews/1');
+    expect(deletedReview.status).toBe(404);
+    console.log(deletedReview.status);
+  });
+
   afterAll(() => {
     pool.end();
   });
