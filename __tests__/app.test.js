@@ -66,6 +66,21 @@ describe('backend-express-template routes', () => {
     expect(res.body).toEqual([{ ...user }]);
   });
 
+  it('/restaurants/:id/reviews create new review', async () => {
+    const agent = request.agent(app);
+    await agent.get('/api/v1/users').send(userExample);
+    console.log(agent.body);
+    const resp = await agent
+      .post('/api/v1/restaurants/1/reviews')
+      .send({ rating: '5 stars', opinion: 'Great every, single, time' });
+    expect(resp.body).toEqual({
+      id: '5',
+      rating: '5 stars',
+      opinion: 'Great every, single, time',
+    });
+    console.log(resp.body);
+  });
+
 
   afterAll(() => {
     pool.end();

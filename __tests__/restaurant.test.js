@@ -31,18 +31,6 @@ describe('backend-express-template routes', () => {
     expect(resp.body).toEqual(restaurantOne);
   });
 
-  it('/restaurants/:id/reviews create new review', async () => {
-    const resp = await request(app)
-      .post('/api/v1/restaurants/1/reviews')
-      .send({ rating: '5 stars', opinion: 'Great every, single, time' });
-    expect(resp.body).toEqual({
-      id: '5',
-      rating: '5 stars',
-      opinion: 'Great every, single, time',
-    });
-    console.log(resp.body);
-  });
-
   it('/reviews/:id deletes a review', async () => {
     const deletedReview = await request(app).get('/reviews/1');
     expect(deletedReview.status).toBe(404);
