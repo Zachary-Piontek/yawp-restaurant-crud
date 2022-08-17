@@ -31,16 +31,6 @@ describe('backend-express-template routes', () => {
     expect(resp.body).toEqual(restaurantOne);
   });
 
-
-  it('/reviews/:id deletes a review', async () => {
-    const resp = await request(app).delete('/api/v1/reviews/1');
-    console.log(resp.body);
-    expect(resp.status).toBe(200);
-    const deletedReview = await request(app).get('/api/v1/reviews/1');
-    expect(deletedReview.status).toBe(404);
-    console.log(deletedReview.status);
-  });
-
   afterAll(() => {
     pool.end();
   });

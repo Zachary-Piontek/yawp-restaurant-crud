@@ -50,6 +50,7 @@ VALUES
   'TGI Fridays', 'Casual-Dining', 'American'
 );
 
+
 INSERT INTO reviews (rating, opinion)
 VALUES
 (
@@ -64,6 +65,7 @@ VALUES
 (
   '4 stars', 'service good and food takes some time to arrive but quality is good'
 );
+
 
 INSERT INTO restaurant_reviews (review_id, restaurant_id) 
 VALUES
