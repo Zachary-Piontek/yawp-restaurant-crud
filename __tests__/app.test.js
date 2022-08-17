@@ -31,8 +31,6 @@ describe('backend-express-template routes', () => {
   it('create new user', async () => {
     const res = await request(app).post('/api/v1/users').send(userExample);
     const { firstName, lastName, email } = userExample;
-    console.log(userExample);
-    console.log(res.body);
     expect(res.body).toEqual({
       id: expect.any(String),
       firstName,
@@ -53,7 +51,7 @@ describe('backend-express-template routes', () => {
   it('should return a 403 when signed in but not admin and listing all users', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.get('/api/v1/users');
-    console.log(res.body);
+    // console.log(res.body);
     expect(res.body).toEqual({
       message: 'You do not have access to view this page',
       status: 403,
@@ -68,8 +66,9 @@ describe('backend-express-template routes', () => {
 
   it('/restaurants/:id/reviews create new review', async () => {
     const agent = request.agent(app);
-    await agent.get('/api/v1/users').send(userExample);
-    console.log(agent.body);
+    await agent.post('/api/v1/users').send(userExample);
+    const { email, password } = userExample;
+    await agent.post('/api/v1/users/sessions').send({ email, password });
     const resp = await agent
       .post('/api/v1/restaurants/1/reviews')
       .send({ rating: '5 stars', opinion: 'Great every, single, time' });
